@@ -1,54 +1,51 @@
 <!DOCTYPE html>
-<html>
+<html lang="vi">
 <head>
-<title>Happy Birthday</title>
+<meta charset="UTF-8">
+<title>Birthday Terminal</title>
 
 <style>
 
 body{
-text-align:center;
-font-family:Arial;
-background:#ffd6e7;
+margin:0;
+background:black;
+color:#00ff9c;
+font-family:monospace;
+padding:40px;
+overflow:hidden;
 }
 
-.cake{
-width:200px;
-height:120px;
-background:pink;
-margin:60px auto;
-border-radius:10px;
-position:relative;
+#terminal{
+font-size:20px;
+line-height:1.6;
+white-space:pre-wrap;
 }
 
-.candle{
+.cursor{
+display:inline-block;
 width:10px;
-height:40px;
-background:red;
-position:absolute;
-left:95px;
-top:-40px;
+background:#00ff9c;
+animation:blink 1s infinite;
 }
 
-.flame{
-width:12px;
-height:12px;
-background:orange;
+@keyframes blink{
+0%{opacity:1}
+50%{opacity:0}
+100%{opacity:1}
+}
+
+.firework{
+position:absolute;
+width:6px;
+height:6px;
+background:white;
 border-radius:50%;
-position:absolute;
-top:-12px;
-left:-1px;
-animation:flicker 0.3s infinite;
+animation:explode 1s forwards;
 }
 
-@keyframes flicker{
-0%{transform:scale(1)}
-50%{transform:scale(1.2)}
-100%{transform:scale(1)}
-}
-
-button{
-padding:12px;
-font-size:18px;
+@keyframes explode{
+0%{transform:translate(0,0);opacity:1}
+100%{transform:translate(var(--x),var(--y));opacity:0}
 }
 
 </style>
@@ -57,21 +54,91 @@ font-size:18px;
 
 <body>
 
-<h1>🎉 Happy Birthday 🎂</h1>
+<div id="terminal"></div>
 
-<div class="cake">
-<div class="candle">
-<div id="flame" class="flame"></div>
-</div>
-</div>
-
-<button onclick="blow()">Thổi nến</button>
+<audio autoplay loop>
+<source src="https://www2.cs.uic.edu/~i101/SoundFiles/HappyBirthday.mid">
+</audio>
 
 <script>
 
-function blow(){
-document.getElementById("flame").style.display="none";
-alert("🎉 Chúc mừng sinh nhật!");
+const text = [
+"Booting birthday system...",
+"Loading celebration protocol...",
+"Connecting to happiness server...",
+"",
+"> Access granted",
+"",
+"> Initializing birthday sequence...",
+"",
+"🎉 HAPPY BIRTHDAY 🎉",
+"",
+"Chúc bạn một ngày sinh nhật thật tuyệt vời!",
+"Chúc bạn luôn hạnh phúc và thành công.",
+"",
+"> Launching fireworks..."
+];
+
+let i = 0;
+let line = 0;
+
+const terminal = document.getElementById("terminal");
+
+function type(){
+
+if(line < text.length){
+
+if(i < text[line].length){
+
+terminal.innerHTML += text[line].charAt(i);
+i++;
+
+setTimeout(type,40);
+
+}else{
+
+terminal.innerHTML += "<br>";
+i=0;
+line++;
+
+setTimeout(type,400);
+
+}
+
+}else{
+
+fireworks();
+
+}
+
+}
+
+type();
+
+function fireworks(){
+
+setInterval(()=>{
+
+for(let i=0;i<60;i++){
+
+let f=document.createElement("div");
+
+f.className="firework";
+
+f.style.left=Math.random()*window.innerWidth+"px";
+f.style.top=Math.random()*window.innerHeight+"px";
+
+f.style.setProperty("--x",(Math.random()*400-200)+"px");
+f.style.setProperty("--y",(Math.random()*400-200)+"px");
+
+document.body.appendChild(f);
+
+setTimeout(()=>f.remove(),1000);
+
+}
+
+},800);
+
 }
 
 </script>
