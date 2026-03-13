@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Happy Birthday</title>
+
+<style>
+
+body{
+text-align:center;
+font-family:Arial;
+background:#ffd6e7;
+}
+
+.cake{
+width:200px;
+height:120px;
+background:pink;
+margin:60px auto;
+border-radius:10px;
+position:relative;
+}
+
+.candle{
+width:10px;
+height:40px;
+background:red;
+position:absolute;
+left:95px;
+top:-40px;
+}
+
+.flame{
+width:12px;
+height:12px;
+background:orange;
+border-radius:50%;
+position:absolute;
+top:-12px;
+left:-1px;
+animation:flicker 0.3s infinite;
+}
+
+@keyframes flicker{
+0%{transform:scale(1)}
+50%{transform:scale(1.2)}
+100%{transform:scale(1)}
+}
+
+button{
+padding:12px;
+font-size:18px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<h1>🎉 Happy Birthday 🎂</h1>
+
+<div class="cake">
+<div class="candle">
+<div id="flame" class="flame"></div>
+</div>
+</div>
+
+<button onclick="blow()">Thổi nến</button>
+
+<script>
+
+function blow(){
+document.getElementById("flame").style.display="none";
+alert("🎉 Chúc mừng sinh nhật!");
+}
+
+</script>
+
+</body>
+</html>
